@@ -4,563 +4,557 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CareerBoost AI</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  :root{
-    --bg:#0a0d14;--bg2:#111520;--bg3:#181d2e;
-    --accent:#4f8ef7;--accent2:#7c5ff7;--accent3:#2de8b0;
-    --text:#f0f4ff;--text2:#8892b0;--text3:#4a5578;
-    --card:#141826;--border:#1e2540;
-    --grad:linear-gradient(135deg,#4f8ef7,#7c5ff7);
-  }
-  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
-  .page{display:none}
-  .page.active{display:block}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#faf7f2;--cream2:#f3ede3;--cream3:#ece4d6;
+  --ink:#1a1612;--ink2:#4a4540;--ink3:#8a8580;
+  --gold:#b8860b;--gold2:#d4a017;--gold3:#f0c030;
+  --green:#1a6b45;--green2:#2d9163;--green3:#e8f5ee;
+  --card:#ffffff;--border:#e0d8cc;--border2:#ccc3b5;
+  --red:#c0392b;--blue:#1a4a8a;
+}
+body{font-family:'Outfit',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;overflow-x:hidden}
+.page{display:none}
+.page.active{display:block}
 
-  /* NAV */
-  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,13,20,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between}
-  .logo{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-  .nav-links{display:flex;gap:2rem;list-style:none}
-  .nav-links a{color:var(--text2);text-decoration:none;font-size:.9rem;transition:color .2s;cursor:pointer}
-  .nav-links a:hover,.nav-links a.active-link{color:var(--text)}
-  .nav-btn{background:var(--grad);color:#fff;border:none;padding:.5rem 1.2rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;transition:opacity .2s}
-  .nav-btn:hover{opacity:.85}
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(250,247,242,.96);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:0 3rem;height:68px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:900;color:var(--ink);letter-spacing:-.01em}
+.logo em{font-style:italic;color:var(--gold)}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{color:var(--ink2);text-decoration:none;font-size:.88rem;font-weight:400;letter-spacing:.01em;cursor:pointer;transition:color .2s;border-bottom:1px solid transparent;padding-bottom:2px}
+.nav-links a:hover{color:var(--ink);border-bottom-color:var(--gold)}
+.nav-cta{background:var(--ink);color:var(--cream);border:none;padding:.55rem 1.4rem;border-radius:4px;font-family:'Outfit',sans-serif;font-size:.83rem;font-weight:500;cursor:pointer;letter-spacing:.02em;transition:background .2s}
+.nav-cta:hover{background:var(--ink2)}
 
-  /* HERO */
-  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 4rem;position:relative;overflow:hidden}
-  .hero::before{content:'';position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(79,142,247,.12) 0%,transparent 70%);pointer-events:none}
-  .hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.3);color:var(--accent);border-radius:20px;padding:.35rem 1rem;font-size:.8rem;margin-bottom:1.5rem}
-  .hero h1{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,7vw,5.5rem);font-weight:800;line-height:1.05;margin-bottom:1.5rem}
-  .hero h1 span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-  .hero p{color:var(--text2);font-size:1.1rem;max-width:560px;margin:0 auto 2.5rem;line-height:1.7}
-  .btn-group{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-  .btn-primary{background:var(--grad);color:#fff;border:none;padding:.85rem 2rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;cursor:pointer;transition:transform .2s,opacity .2s}
-  .btn-primary:hover{transform:translateY(-2px);opacity:.9}
-  .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border);padding:.85rem 2rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.95rem;cursor:pointer;transition:border-color .2s,background .2s}
-  .btn-outline:hover{border-color:var(--accent);background:rgba(79,142,247,.06)}
-  .hero-stats{display:flex;gap:3rem;justify-content:center;margin-top:4rem;flex-wrap:wrap}
-  .stat{text-align:center}
-  .stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-  .stat-label{color:var(--text2);font-size:.85rem;margin-top:.2rem}
+/* ── HERO ── */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:8rem 3rem 5rem;max-width:1300px;margin:0 auto;gap:4rem}
+.hero-left{}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-bottom:1.5rem;border-bottom:1px solid var(--green2);padding-bottom:.3rem}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,5vw,4.2rem);font-weight:900;line-height:1.08;letter-spacing:-.02em;margin-bottom:1.5rem;color:var(--ink)}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero-desc{font-size:1.05rem;font-weight:300;line-height:1.8;color:var(--ink2);max-width:460px;margin-bottom:2.5rem;border-left:3px solid var(--gold);padding-left:1rem}
+.hero-actions{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.btn-ink{background:var(--ink);color:var(--cream);border:none;padding:.8rem 1.8rem;border-radius:4px;font-family:'Outfit',sans-serif;font-size:.9rem;font-weight:500;cursor:pointer;transition:background .2s;letter-spacing:.01em}
+.btn-ink:hover{background:#2d2820}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--border2);padding:.8rem 1.8rem;border-radius:4px;font-family:'Outfit',sans-serif;font-size:.9rem;cursor:pointer;transition:border-color .2s,background .2s;letter-spacing:.01em}
+.btn-ghost:hover{border-color:var(--gold);background:rgba(184,134,11,.04)}
+.hero-right{display:flex;flex-direction:column;gap:1.2rem}
+.hero-stat-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.5rem;position:relative;overflow:hidden}
+.hero-stat-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold)}
+.hsc-num{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:var(--ink);line-height:1}
+.hsc-label{font-size:.82rem;color:var(--ink3);margin-top:.3rem;font-weight:400}
+.hero-tagline{background:var(--green);color:#fff;border-radius:8px;padding:1.25rem 1.5rem;font-size:.88rem;line-height:1.6;font-weight:300}
+.hero-tagline strong{font-weight:600;font-style:italic}
 
-  /* SECTIONS */
-  section{padding:5rem 2rem}
-  .container{max-width:1100px;margin:0 auto}
-  .section-tag{color:var(--accent);font-size:.8rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem}
-  .section-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;margin-bottom:1rem}
-  .section-sub{color:var(--text2);font-size:1rem;line-height:1.7;max-width:520px}
+/* ── SECTIONS ── */
+section{padding:5.5rem 3rem}
+.container{max-width:1200px;margin:0 auto}
+.sec-label{font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,3.5vw,2.8rem);font-weight:900;line-height:1.1;letter-spacing:-.02em;margin-bottom:1rem;color:var(--ink)}
+.sec-title em{font-style:italic;color:var(--gold)}
+.sec-sub{font-size:.98rem;font-weight:300;line-height:1.8;color:var(--ink2);max-width:500px}
+.sec-header{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:3rem;flex-wrap:wrap}
 
-  /* PROBLEM */
-  .problems-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:2.5rem}
-  .problem-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;display:flex;align-items:flex-start;gap:1rem;transition:border-color .2s}
-  .problem-card:hover{border-color:rgba(231,76,60,.4)}
-  .problem-icon{width:36px;height:36px;background:rgba(231,76,60,.12);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#e74c3c;font-size:1rem}
-  .problem-card h4{font-size:.95rem;font-weight:500;margin-bottom:.25rem}
-  .problem-card p{color:var(--text2);font-size:.82rem;line-height:1.5}
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--border);max-width:1200px;margin:0 auto}
 
-  /* SOLUTION */
-  .solutions-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:2.5rem}
-  .solution-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:border-color .2s,transform .2s}
-  .solution-card:hover{border-color:var(--accent);transform:translateY(-3px)}
-  .sol-icon{width:44px;height:44px;background:rgba(79,142,247,.12);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--accent);margin-bottom:1rem}
-  .solution-card h4{font-family:'Syne',sans-serif;font-size:1rem;font-weight:600;margin-bottom:.5rem}
-  .solution-card p{color:var(--text2);font-size:.83rem;line-height:1.5}
+/* ── PROBLEMS ── */
+.prob-bg{background:var(--cream2)}
+.prob-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.prob-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.75rem;transition:border-color .2s,transform .2s;position:relative;overflow:hidden}
+.prob-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.prob-card:hover{transform:translateY(-2px);border-color:var(--border2)}
+.prob-card:hover::after{transform:scaleX(1)}
+.prob-ico{width:40px;height:40px;background:#fdf0ee;border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--red);font-size:1.1rem;margin-bottom:1rem}
+.prob-card h4{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;margin-bottom:.5rem;color:var(--ink)}
+.prob-card p{font-size:.84rem;font-weight:300;line-height:1.65;color:var(--ink2)}
 
-  /* INNOVATION */
-  .inno-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:2.5rem}
-  .inno-card{background:linear-gradient(135deg,rgba(79,142,247,.06),rgba(124,95,247,.06));border:1px solid rgba(79,142,247,.2);border-radius:14px;padding:1.5rem;text-align:center}
-  .inno-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem}
-  .inno-card p{color:var(--text2);font-size:.85rem;line-height:1.5}
+/* ── SOLUTIONS ── */
+.sol-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem}
+.sol-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.75rem;transition:border-color .2s,transform .2s}
+.sol-card:hover{border-color:var(--gold);transform:translateY(-3px)}
+.sol-ico{width:44px;height:44px;background:#fdf8e8;border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.15rem;margin-bottom:1.1rem}
+.sol-card h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.45rem;color:var(--ink)}
+.sol-card p{font-size:.82rem;font-weight:300;line-height:1.6;color:var(--ink2)}
 
-  /* ECOSYSTEM */
-  .eco-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;margin-top:2.5rem}
-  .eco-col{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem}
-  .eco-col h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
-  .eco-col h3 i{color:var(--accent2)}
-  .eco-tag{display:inline-block;background:rgba(124,95,247,.1);border:1px solid rgba(124,95,247,.25);color:#a78bfa;border-radius:6px;padding:.25rem .7rem;font-size:.78rem;margin:.2rem}
+/* ── INNOVATION ── */
+.inno-bg{background:var(--ink)}
+.inno-bg .sec-label{color:var(--gold)}
+.inno-bg .sec-title{color:var(--cream)}
+.inno-bg .sec-sub{color:#a0988e}
+.inno-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:3rem}
+.inno-item{border:1px solid #302820;border-radius:8px;padding:1.75rem;position:relative}
+.inno-item::before{content:attr(data-n);font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:#2d2820;position:absolute;top:.5rem;right:1rem;line-height:1}
+.inno-item p{font-size:.9rem;font-weight:300;line-height:1.65;color:#c0b8ae;position:relative;z-index:1}
+.inno-line{width:30px;height:2px;background:var(--gold);margin-bottom:1rem}
 
-  /* STEPS */
-  .steps{display:flex;gap:1.5rem;margin-top:2.5rem;flex-wrap:wrap}
-  .step{flex:1;min-width:150px;text-align:center;position:relative}
-  .step:not(:last-child)::after{content:'';position:absolute;top:22px;right:-12px;width:24px;height:2px;background:var(--border)}
-  .step-num{width:44px;height:44px;background:var(--grad);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin:0 auto .75rem;color:#fff}
-  .step h4{font-size:.9rem;font-weight:500;margin-bottom:.3rem}
-  .step p{color:var(--text2);font-size:.78rem;line-height:1.4}
+/* ── ECOSYSTEM ── */
+.eco-bg{background:var(--cream2)}
+.eco-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.25rem}
+.eco-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.5rem}
+.eco-card h3{font-size:.85rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--green);margin-bottom:1rem;display:flex;align-items:center;gap:.4rem}
+.eco-tag{display:inline-block;background:var(--green3);color:var(--green);border-radius:3px;padding:.25rem .65rem;font-size:.76rem;font-weight:500;margin:.2rem}
 
-  /* IMPACT */
-  .impact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:2.5rem}
-  .impact-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:2rem;text-align:center}
-  .impact-icon{font-size:2.5rem;margin-bottom:1rem}
-  .impact-card h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:600;margin-bottom:.5rem}
-  .impact-card p{color:var(--text2);font-size:.88rem;line-height:1.6}
+/* ── FINANCEMENT ── */
+.fin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.25rem;margin-top:3rem}
+.fin-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.5rem;border-top:3px solid var(--gold)}
+.fin-card h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:.6rem;color:var(--ink)}
+.fin-card p{font-size:.82rem;font-weight:300;line-height:1.6;color:var(--ink2)}
 
-  /* CLIENTS */
-  .clients-row{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem}
-  .client-chip{background:rgba(45,232,176,.08);border:1px solid rgba(45,232,176,.25);color:var(--accent3);border-radius:20px;padding:.4rem 1.1rem;font-size:.85rem;font-weight:500}
+/* ── ROADMAP ── */
+.roadmap{display:grid;grid-template-columns:repeat(6,1fr);gap:0;margin-top:3rem}
+.rm-step{text-align:center;position:relative}
+.rm-step:not(:last-child)::after{content:'';position:absolute;top:21px;right:-50%;width:100%;height:1px;background:var(--border2);z-index:0}
+.rm-dot{width:44px;height:44px;border-radius:50%;background:var(--card);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:900;font-size:.95rem;margin:0 auto 1rem;color:var(--gold);position:relative;z-index:1}
+.rm-step h4{font-size:.85rem;font-weight:600;color:var(--ink);margin-bottom:.25rem}
+.rm-step p{font-size:.72rem;font-weight:300;color:var(--ink3);line-height:1.4}
 
-  /* FINANCEMENT */
-  .fin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:2rem}
-  .fin-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
-  .fin-card h4{font-size:.9rem;font-weight:500;color:var(--accent);margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
-  .fin-card p{color:var(--text2);font-size:.82rem;line-height:1.5}
+/* ── IMPACT ── */
+.impact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.impact-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:2rem;text-align:left;position:relative;overflow:hidden}
+.impact-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.imp-social::before{background:#2d9163}
+.imp-eco::before{background:var(--gold)}
+.imp-edu::before{background:var(--blue)}
+.impact-ico{font-size:1.5rem;margin-bottom:1.1rem}
+.impact-card h3{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;margin-bottom:.6rem;color:var(--ink)}
+.impact-card p{font-size:.86rem;font-weight:300;line-height:1.7;color:var(--ink2)}
 
-  /* FOOTER */
-  footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem;text-align:center;color:var(--text3);font-size:.85rem}
-  footer span{color:var(--accent)}
+/* ── CLIENTS ── */
+.clients-bg{background:var(--ink)}
+.clients-bg .sec-title{color:var(--cream)}
+.clients-bg .sec-label{color:var(--gold)}
+.clients-row{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:2.5rem}
+.client-chip{background:transparent;border:1px solid #3d3830;color:#c0b8ae;border-radius:4px;padding:.5rem 1.2rem;font-size:.85rem;font-weight:400;display:flex;align-items:center;gap:.5rem;transition:border-color .2s,color .2s}
+.client-chip:hover{border-color:var(--gold);color:var(--gold3)}
 
-  /* ======================= ADMIN ======================= */
-  .admin-layout{display:flex;min-height:100vh;padding-top:64px}
-  .sidebar{width:240px;background:var(--bg2);border-right:1px solid var(--border);padding:1.5rem 0;flex-shrink:0;position:fixed;top:64px;bottom:0;overflow-y:auto}
-  .sidebar-group{margin-bottom:1.5rem}
-  .sidebar-label{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:.5rem 1.5rem;margin-bottom:.25rem}
-  .sidebar-item{display:flex;align-items:center;gap:.75rem;padding:.65rem 1.5rem;color:var(--text2);cursor:pointer;font-size:.88rem;transition:background .15s,color .15s;border-left:3px solid transparent}
-  .sidebar-item:hover{background:rgba(79,142,247,.06);color:var(--text)}
-  .sidebar-item.active{background:rgba(79,142,247,.1);color:var(--accent);border-left-color:var(--accent)}
-  .sidebar-item i{font-size:1rem;width:18px;text-align:center}
-  .admin-content{margin-left:240px;flex:1;padding:2rem}
-  .admin-panel{display:none}
-  .admin-panel.active{display:block}
-  .admin-header{margin-bottom:2rem}
-  .admin-header h2{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:700}
-  .admin-header p{color:var(--text2);font-size:.9rem;margin-top:.25rem}
-  .metrics-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem}
-  .metric-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
-  .metric-card .label{color:var(--text2);font-size:.78rem;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
-  .metric-card .value{font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:700}
-  .metric-card .delta{font-size:.78rem;margin-top:.25rem}
-  .delta-up{color:#2de8b0}
-  .delta-down{color:#e74c3c}
-  .admin-table-wrap{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-  .admin-table-head{padding:1rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-  .admin-table-head h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:600}
-  table.admin-table{width:100%;border-collapse:collapse}
-  table.admin-table th{background:rgba(255,255,255,.03);padding:.75rem 1.25rem;text-align:left;font-size:.78rem;font-weight:500;color:var(--text2);letter-spacing:.04em;text-transform:uppercase;border-bottom:1px solid var(--border)}
-  table.admin-table td{padding:.85rem 1.25rem;font-size:.88rem;border-bottom:1px solid rgba(30,37,64,.5)}
-  table.admin-table tr:last-child td{border-bottom:none}
-  table.admin-table tr:hover td{background:rgba(79,142,247,.03)}
-  .badge{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .7rem;border-radius:20px;font-size:.75rem;font-weight:500}
-  .badge-green{background:rgba(45,232,176,.1);color:#2de8b0;border:1px solid rgba(45,232,176,.25)}
-  .badge-blue{background:rgba(79,142,247,.1);color:var(--accent);border:1px solid rgba(79,142,247,.25)}
-  .badge-purple{background:rgba(124,95,247,.1);color:#a78bfa;border:1px solid rgba(124,95,247,.25)}
-  .badge-orange{background:rgba(251,146,60,.1);color:#fb923c;border:1px solid rgba(251,146,60,.25)}
-  .badge-red{background:rgba(231,76,60,.1);color:#e74c3c;border:1px solid rgba(231,76,60,.25)}
-  .admin-form{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.75rem;margin-bottom:1.5rem}
-  .admin-form h3{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:600;margin-bottom:1.25rem;display:flex;align-items:center;gap:.5rem;color:var(--accent)}
-  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
-  .form-group{margin-bottom:1rem}
-  .form-group label{display:block;font-size:.8rem;font-weight:500;color:var(--text2);margin-bottom:.4rem}
-  .form-group input,.form-group select,.form-group textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:.65rem .9rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;transition:border-color .2s;outline:none}
-  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent)}
-  .form-group textarea{resize:vertical;min-height:90px}
-  .form-group select option{background:var(--bg3)}
-  .btn-save{background:var(--grad);color:#fff;border:none;padding:.7rem 1.5rem;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:500;cursor:pointer;transition:opacity .2s}
-  .btn-save:hover{opacity:.85}
-  .btn-del{background:rgba(231,76,60,.1);color:#e74c3c;border:1px solid rgba(231,76,60,.25);padding:.4rem .8rem;border-radius:6px;font-size:.78rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
-  .btn-del:hover{background:rgba(231,76,60,.2)}
-  .btn-edit{background:rgba(79,142,247,.1);color:var(--accent);border:1px solid rgba(79,142,247,.25);padding:.4rem .8rem;border-radius:6px;font-size:.78rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s;margin-right:.3rem}
-  .btn-edit:hover{background:rgba(79,142,247,.2)}
-  .chart-bar-wrap{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem}
-  .chart-bar-wrap h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:600;margin-bottom:1.25rem}
-  .bar-chart{display:flex;align-items:flex-end;gap:.6rem;height:140px}
-  .bar-col{display:flex;flex-direction:column;align-items:center;gap:.4rem;flex:1}
-  .bar{width:100%;background:linear-gradient(180deg,var(--accent),var(--accent2));border-radius:6px 6px 0 0;transition:opacity .2s;min-height:4px}
-  .bar:hover{opacity:.75}
-  .bar-label{font-size:.7rem;color:var(--text3)}
-  .bar-val{font-size:.7rem;color:var(--text2);margin-bottom:.2rem}
-  .toast{position:fixed;bottom:2rem;right:2rem;background:var(--accent);color:#fff;padding:.85rem 1.5rem;border-radius:10px;font-size:.88rem;font-weight:500;z-index:9999;transform:translateY(100px);opacity:0;transition:all .35s}
-  .toast.show{transform:translateY(0);opacity:1}
-  /* Login */
-  .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
-  .login-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2.5rem;width:100%;max-width:400px}
-  .login-logo{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:.4rem}
-  .login-sub{color:var(--text2);font-size:.88rem;text-align:center;margin-bottom:2rem}
-  .login-err{color:#e74c3c;font-size:.82rem;text-align:center;margin-top:.5rem;min-height:1rem}
-  @media(max-width:768px){
-    .admin-layout{flex-direction:column}
-    .sidebar{width:100%;position:static;height:auto;display:flex;flex-wrap:wrap;border-right:none;border-bottom:1px solid var(--border);padding:.5rem}
-    .sidebar-label{display:none}
-    .sidebar-item{padding:.4rem .75rem;border-left:none;border-bottom:2px solid transparent}
-    .sidebar-item.active{border-bottom-color:var(--accent);border-left:none;background:transparent}
-    .admin-content{margin-left:0}
-    .form-row{grid-template-columns:1fr}
-    .step::after{display:none}
-  }
+/* ── FOOTER ── */
+footer{background:var(--ink);border-top:1px solid #2d2820;padding:2.5rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.foot-logo{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:900;color:var(--cream)}
+.foot-logo em{font-style:italic;color:var(--gold)}
+footer p{font-size:.8rem;color:#6a6058;font-weight:300}
+
+/* ══════════════════════ ADMIN ══════════════════════ */
+.admin-wrap{display:flex;min-height:100vh;padding-top:68px}
+.sidebar{width:250px;background:var(--card);border-right:1px solid var(--border);position:fixed;top:68px;bottom:0;overflow-y:auto;padding:1.5rem 0}
+.sidebar-section{margin-bottom:1.75rem}
+.sidebar-sec-label{font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);padding:.3rem 1.5rem .5rem}
+.sidebar-item{display:flex;align-items:center;gap:.75rem;padding:.6rem 1.5rem;font-size:.85rem;font-weight:400;color:var(--ink2);cursor:pointer;transition:background .15s,color .15s;border-right:2px solid transparent}
+.sidebar-item i{font-size:.95rem;width:16px;text-align:center;color:var(--ink3)}
+.sidebar-item:hover{background:var(--cream);color:var(--ink)}
+.sidebar-item.active{background:var(--cream2);color:var(--green);border-right-color:var(--green);font-weight:500}
+.sidebar-item.active i{color:var(--green)}
+.admin-main{margin-left:250px;flex:1;padding:2.5rem 3rem;background:var(--cream)}
+.admin-panel{display:none}
+.admin-panel.active{display:block}
+.admin-h{margin-bottom:2rem}
+.admin-h h2{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:var(--ink);letter-spacing:-.01em}
+.admin-h p{font-size:.85rem;font-weight:300;color:var(--ink3);margin-top:.25rem}
+.metrics-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1rem;margin-bottom:2rem}
+.metric-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.25rem 1.5rem;border-left:3px solid var(--gold)}
+.metric-card .mlabel{font-size:.73rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3);margin-bottom:.5rem;display:flex;align-items:center;gap:.35rem}
+.metric-card .mval{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--ink)}
+.metric-card .mdelta{font-size:.75rem;color:var(--green);margin-top:.2rem}
+.admin-card{background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:1.5rem}
+.admin-card-head{padding:1rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.admin-card-head h3{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink)}
+table.atbl{width:100%;border-collapse:collapse}
+table.atbl th{background:var(--cream);padding:.7rem 1.25rem;text-align:left;font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--border)}
+table.atbl td{padding:.85rem 1.25rem;font-size:.85rem;border-bottom:1px solid var(--cream2);font-weight:400;color:var(--ink2)}
+table.atbl tr:last-child td{border-bottom:none}
+table.atbl tr:hover td{background:var(--cream)}
+.badge{display:inline-flex;align-items:center;gap:.25rem;padding:.2rem .65rem;border-radius:3px;font-size:.73rem;font-weight:500}
+.b-green{background:var(--green3);color:var(--green)}
+.b-gold{background:#fdf8e8;color:var(--gold)}
+.b-blue{background:#e8eef8;color:var(--blue)}
+.b-red{background:#fdf0ee;color:var(--red)}
+.b-gray{background:var(--cream2);color:var(--ink3)}
+.admin-form{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:2rem;margin-bottom:1.5rem}
+.admin-form h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.5rem}
+.admin-form h3 i{color:var(--gold)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:.75rem}
+.fgroup{margin-bottom:.75rem}
+.fgroup label{display:block;font-size:.75rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);margin-bottom:.4rem}
+.fgroup input,.fgroup select,.fgroup textarea{width:100%;background:var(--cream);border:1px solid var(--border2);border-radius:4px;padding:.6rem .9rem;color:var(--ink);font-family:'Outfit',sans-serif;font-size:.86rem;font-weight:400;outline:none;transition:border-color .2s}
+.fgroup input:focus,.fgroup select:focus,.fgroup textarea:focus{border-color:var(--gold);background:#fff}
+.fgroup textarea{resize:vertical;min-height:85px}
+.fgroup select option{background:#fff}
+.btn-save{background:var(--ink);color:var(--cream);border:none;padding:.65rem 1.4rem;border-radius:4px;font-family:'Outfit',sans-serif;font-size:.84rem;font-weight:500;cursor:pointer;letter-spacing:.01em;transition:background .2s}
+.btn-save:hover{background:#2d2820}
+.btn-del{background:var(--cream);color:var(--red);border:1px solid #f0d0cc;padding:.35rem .75rem;border-radius:4px;font-size:.75rem;cursor:pointer;font-family:'Outfit',sans-serif;transition:background .2s}
+.btn-del:hover{background:#fdf0ee}
+.btn-ok{background:var(--green3);color:var(--green);border:1px solid #c0e8d0;padding:.35rem .75rem;border-radius:4px;font-size:.75rem;cursor:pointer;font-family:'Outfit',sans-serif;margin-right:.35rem;transition:background .2s}
+.btn-ok:hover{background:#d0f0e0}
+.chart-wrap{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1.75rem;margin-bottom:1.5rem}
+.chart-wrap h3{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:1.5rem}
+.barchart{display:flex;align-items:flex-end;gap:.5rem;height:130px}
+.bcol{display:flex;flex-direction:column;align-items:center;gap:.35rem;flex:1}
+.bbar{width:100%;background:var(--gold2);border-radius:3px 3px 0 0;opacity:.85;transition:opacity .2s;min-height:3px}
+.bbar:hover{opacity:1}
+.blabel{font-size:.65rem;color:var(--ink3);font-weight:400}
+.bval{font-size:.65rem;color:var(--ink2);font-weight:500}
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;background:var(--cream2)}
+.login-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:3rem;width:100%;max-width:400px}
+.login-logo{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;text-align:center;margin-bottom:.3rem;color:var(--ink)}
+.login-logo em{font-style:italic;color:var(--gold)}
+.login-sub{font-size:.83rem;font-weight:300;color:var(--ink3);text-align:center;margin-bottom:2.25rem}
+.login-err{color:var(--red);font-size:.8rem;text-align:center;min-height:1.2rem;margin-top:.4rem}
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--ink);color:var(--cream);padding:.85rem 1.5rem;border-radius:5px;font-size:.85rem;font-weight:400;z-index:9999;transform:translateY(80px);opacity:0;transition:all .3s;border-left:3px solid var(--gold)}
+.toast.show{transform:translateY(0);opacity:1}
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding-top:7rem}
+  .hero-right{display:none}
+  .roadmap{grid-template-columns:repeat(3,1fr)}
+  .admin-wrap{flex-direction:column}
+  .sidebar{width:100%;position:static;display:flex;flex-wrap:wrap;height:auto;border-right:none;border-bottom:1px solid var(--border);padding:.5rem}
+  .sidebar-sec-label{display:none}
+  .sidebar-item{padding:.4rem .75rem;border-right:none;border-bottom:2px solid transparent;font-size:.8rem}
+  .sidebar-item.active{border-bottom-color:var(--green);background:transparent}
+  .admin-main{margin-left:0;padding:1.5rem}
+  .form-row{grid-template-columns:1fr}
+  nav{padding:0 1.5rem}
+  section{padding:4rem 1.5rem}
+  footer{padding:2rem 1.5rem}
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="main-nav">
-  <div class="logo">CareerBoost AI</div>
-  <ul class="nav-links" id="nav-links">
-    <li><a onclick="scrollTo('probleme')" class="active-link">Accueil</a></li>
-    <li><a onclick="scrollTo('solution')">Solution</a></li>
-    <li><a onclick="scrollTo('innovation')">Innovation</a></li>
-    <li><a onclick="scrollTo('impact')">Impact</a></li>
-    <li><a onclick="showAdmin()">Admin</a></li>
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav>
+  <div class="logo">Career<em>Boost</em> AI</div>
+  <ul class="nav-links" id="pub-nav">
+    <li><a onclick="goTo('hero-sec')">Accueil</a></li>
+    <li><a onclick="goTo('sol-sec')">Solution</a></li>
+    <li><a onclick="goTo('inno-sec')">Innovation</a></li>
+    <li><a onclick="goTo('impact-sec')">Impact</a></li>
+    <li><a onclick="showLogin()">Admin</a></li>
   </ul>
-  <button class="nav-btn" onclick="scrollTo('solution')">Démarrer</button>
+  <button class="nav-cta" onclick="goTo('sol-sec')">Découvrir →</button>
 </nav>
 
-<!-- PAGE PUBLIQUE -->
+<!-- ═══════════════ PAGE PUBLIQUE ═══════════════ -->
 <div id="page-public" class="page active">
 
   <!-- HERO -->
-  <section class="hero">
-    <div>
-      <div class="hero-badge"><i class="ti ti-sparkles"></i> Plateforme IA · HR Tech · EdTech</div>
-      <h1>Boostez votre<br><span>carrière professionnelle</span><br>avec l'IA</h1>
-      <p>CareerBoost AI accompagne étudiants et jeunes diplômés dans chaque étape de leur parcours professionnel grâce à une intelligence artificielle personnalisée.</p>
-      <div class="btn-group">
-        <button class="btn-primary" onclick="scrollTo('solution')"><i class="ti ti-rocket"></i> Découvrir la solution</button>
-        <button class="btn-outline" onclick="scrollTo('impact')">En savoir plus</button>
+  <div class="hero" id="hero-sec">
+    <div class="hero-left">
+      <div class="hero-eyebrow"><i class="ti ti-sparkles"></i> HR Tech · IA · EdTech · Tunisie</div>
+      <h1>Boostez votre<br><em>carrière</em><br>avec l'intelligence artificielle</h1>
+      <p class="hero-desc">CareerBoost AI accompagne étudiants et jeunes diplômés à chaque étape de leur parcours professionnel grâce à une IA personnalisée, disponible 24h/24.</p>
+      <div class="hero-actions">
+        <button class="btn-ink" onclick="goTo('sol-sec')"><i class="ti ti-rocket"></i> Voir la plateforme</button>
+        <button class="btn-ghost" onclick="goTo('impact-sec')">Notre impact</button>
       </div>
-      <div class="hero-stats">
-        <div class="stat"><div class="stat-num">7</div><div class="stat-label">Fonctionnalités IA</div></div>
-        <div class="stat"><div class="stat-num">5</div><div class="stat-label">Problèmes résolus</div></div>
-        <div class="stat"><div class="stat-num">3</div><div class="stat-label">Secteurs ciblés</div></div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stat-card"><div class="hsc-num" id="h-users">1 247</div><div class="hsc-label">Utilisateurs actifs sur la plateforme</div></div>
+      <div class="hero-stat-card"><div class="hsc-num">3 894</div><div class="hsc-label">CV professionnels générés</div></div>
+      <div class="hero-stat-card"><div class="hsc-num">856</div><div class="hsc-label">Offres d'emploi matchées</div></div>
+      <div class="hero-tagline">Solution tout-en-un pour l'employabilité —<br><strong>CV + Coaching + Matching + Entretien</strong></div>
+    </div>
+  </div>
+
+  <!-- PROBLÈMES -->
+  <section class="prob-bg" id="prob-sec">
+    <div class="container">
+      <div class="sec-header">
+        <div>
+          <div class="sec-label">Contexte</div>
+          <h2 class="sec-title">Problèmes <em>identifiés</em></h2>
+        </div>
+        <p class="sec-sub">Le marché de l'emploi est de plus en plus compétitif. Étudiants et jeunes diplômés peinent à s'insérer malgré leurs compétences.</p>
       </div>
+      <div class="prob-grid" id="prob-grid"></div>
     </div>
   </section>
 
-  <!-- PROBLÈME -->
-  <section id="probleme" style="background:var(--bg2)">
+  <!-- SOLUTIONS -->
+  <section id="sol-sec">
     <div class="container">
-      <div class="section-tag">Contexte</div>
-      <h2 class="section-title">Problèmes identifiés</h2>
-      <p class="section-sub">Le marché de l'emploi devient de plus en plus compétitif. Les étudiants et jeunes diplômés rencontrent des difficultés malgré leurs compétences académiques.</p>
-      <div class="problems-grid" id="problems-container">
-        <!-- dynamique JS -->
+      <div class="sec-header">
+        <div>
+          <div class="sec-label">Notre réponse</div>
+          <h2 class="sec-title">Une plateforme <em>complète</em></h2>
+        </div>
+        <p class="sec-sub">Sept fonctionnalités IA intégrées pour maximiser vos chances d'insertion professionnelle.</p>
       </div>
-    </div>
-  </section>
-
-  <!-- SOLUTION -->
-  <section id="solution">
-    <div class="container">
-      <div class="section-tag">Notre solution</div>
-      <h2 class="section-title">Une plateforme tout-en-un</h2>
-      <p class="section-sub">Solution complète pour l'employabilité : CV + emploi + coaching + entretien, accessible 24h/24.</p>
-      <div class="solutions-grid" id="solutions-container"></div>
+      <div class="sol-grid" id="sol-grid"></div>
     </div>
   </section>
 
   <!-- INNOVATION -->
-  <section id="innovation" style="background:var(--bg2)">
+  <section class="inno-bg" id="inno-sec">
     <div class="container">
-      <div class="section-tag">Innovation</div>
-      <h2 class="section-title">Ce qui nous différencie</h2>
-      <p class="section-sub">Une approche entièrement intégrée basée sur l'IA pour maximiser l'employabilité.</p>
-      <div class="inno-grid" id="innovations-container"></div>
+      <div class="sec-label">Différenciation</div>
+      <h2 class="sec-title">Ce qui nous <em>distingue</em></h2>
+      <p class="sec-sub">Une approche entièrement intégrée basée sur l'IA pour transformer l'employabilité.</p>
+      <div class="inno-list" id="inno-list"></div>
     </div>
   </section>
 
   <!-- ÉCOSYSTÈME -->
-  <section id="ecosysteme">
+  <section class="eco-bg">
     <div class="container">
-      <div class="section-tag">Tunisie</div>
-      <h2 class="section-title">Écosystème entrepreneurial</h2>
-      <p class="section-sub">Un environnement favorable avec incubateurs, organismes publics et structures d'innovation.</p>
-      <div class="eco-cols">
-        <div class="eco-col">
-          <h3><i class="ti ti-building"></i> Incubateurs & Accélérateurs</h3>
-          <span class="eco-tag">Startup Tunisia</span>
-          <span class="eco-tag">Flat6Labs</span>
+      <div class="sec-header">
+        <div>
+          <div class="sec-label">Tunisie</div>
+          <h2 class="sec-title">Écosystème <em>entrepreneurial</em></h2>
         </div>
-        <div class="eco-col">
-          <h3><i class="ti ti-landmark"></i> Organismes publics</h3>
-          <span class="eco-tag">APII</span>
-          <span class="eco-tag">ANETI</span>
-        </div>
-        <div class="eco-col">
-          <h3><i class="ti ti-bulb"></i> Structures d'innovation</h3>
-          <span class="eco-tag">Orange Digital Center</span>
-        </div>
-        <div class="eco-col">
-          <h3><i class="ti ti-trophy"></i> Concours</h3>
-          <span class="eco-tag">Orange Summer Challenge</span>
-          <span class="eco-tag">Tunisia Innovation Challenge</span>
-        </div>
+        <p class="sec-sub">Un environnement favorable avec incubateurs, organismes publics et structures d'innovation.</p>
+      </div>
+      <div class="eco-grid">
+        <div class="eco-card"><h3><i class="ti ti-building"></i> Incubateurs</h3><span class="eco-tag">Startup Tunisia</span><span class="eco-tag">Flat6Labs</span></div>
+        <div class="eco-card"><h3><i class="ti ti-landmark"></i> Organismes publics</h3><span class="eco-tag">APII</span><span class="eco-tag">ANETI</span></div>
+        <div class="eco-card"><h3><i class="ti ti-bulb"></i> Innovation</h3><span class="eco-tag">Orange Digital Center</span></div>
+        <div class="eco-card"><h3><i class="ti ti-trophy"></i> Concours</h3><span class="eco-tag">Orange Summer Challenge</span><span class="eco-tag">Tunisia Innovation Challenge</span></div>
       </div>
     </div>
   </section>
 
   <!-- FINANCEMENT -->
-  <section style="background:var(--bg2)">
+  <section>
     <div class="container">
-      <div class="section-tag">Financement</div>
-      <h2 class="section-title">Programmes d'accompagnement</h2>
+      <div class="sec-label">Accompagnement</div>
+      <h2 class="sec-title">Programmes de <em>financement</em></h2>
       <div class="fin-grid">
-        <div class="fin-card"><h4><i class="ti ti-home"></i> Incubation</h4><p>Startup Act, Flat6Labs, Orange Digital Center</p></div>
-        <div class="fin-card"><h4><i class="ti ti-coin"></i> Financement public</h4><p>Subventions publiques et BTS</p></div>
-        <div class="fin-card"><h4><i class="ti ti-users"></i> Investisseurs</h4><p>Business Angels et Capital-risque</p></div>
+        <div class="fin-card"><h4>Incubation</h4><p>Startup Act, Flat6Labs, Orange Digital Center — structures d'accompagnement dédiées aux startups innovantes.</p></div>
+        <div class="fin-card"><h4>Financement public</h4><p>Subventions publiques et BTS — soutien institutionnel de l'État tunisien à l'innovation.</p></div>
+        <div class="fin-card"><h4>Investisseurs privés</h4><p>Business Angels et Capital-risque — réseau d'investisseurs spécialisés dans les projets IA.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- ÉTAPES -->
-  <section id="etapes">
+  <!-- ROADMAP -->
+  <section class="eco-bg">
     <div class="container">
-      <div class="section-tag">Roadmap</div>
-      <h2 class="section-title">Étapes de développement</h2>
-      <div class="steps">
-        <div class="step"><div class="step-num">1</div><h4>Idéation</h4><p>Définition du concept et des besoins</p></div>
-        <div class="step"><div class="step-num">2</div><h4>Prototype</h4><p>Développement du MVP</p></div>
-        <div class="step"><div class="step-num">3</div><h4>Test</h4><p>Tests utilisateurs et retours</p></div>
-        <div class="step"><div class="step-num">4</div><h4>Incubation</h4><p>Intégration dans un incubateur</p></div>
-        <div class="step"><div class="step-num">5</div><h4>Lancement</h4><p>Mise sur le marché</p></div>
-        <div class="step"><div class="step-num">6</div><h4>Scalabilité</h4><p>Croissance et expansion</p></div>
+      <div class="sec-label">Roadmap</div>
+      <h2 class="sec-title">Étapes de <em>développement</em></h2>
+      <div class="roadmap">
+        <div class="rm-step"><div class="rm-dot">1</div><h4>Idéation</h4><p>Définition du concept</p></div>
+        <div class="rm-step"><div class="rm-dot">2</div><h4>Prototype</h4><p>MVP fonctionnel</p></div>
+        <div class="rm-step"><div class="rm-dot">3</div><h4>Test</h4><p>Retours utilisateurs</p></div>
+        <div class="rm-step"><div class="rm-dot">4</div><h4>Incubation</h4><p>Accompagnement</p></div>
+        <div class="rm-step"><div class="rm-dot">5</div><h4>Lancement</h4><p>Mise sur le marché</p></div>
+        <div class="rm-step"><div class="rm-dot">6</div><h4>Scalabilité</h4><p>Croissance nationale</p></div>
       </div>
     </div>
   </section>
 
   <!-- IMPACT -->
-  <section id="impact" style="background:var(--bg2)">
+  <section id="impact-sec">
     <div class="container">
-      <div class="section-tag">Impact</div>
-      <h2 class="section-title">Impact du projet</h2>
+      <div class="sec-header">
+        <div>
+          <div class="sec-label">Impact</div>
+          <h2 class="sec-title">Transformer <em>l'avenir</em></h2>
+        </div>
+        <p class="sec-sub">CareerBoost AI génère un impact mesurable sur trois dimensions essentielles.</p>
+      </div>
       <div class="impact-grid">
-        <div class="impact-card">
-          <div class="impact-icon" style="font-size:2rem"><i class="ti ti-heart" style="color:#2de8b0"></i></div>
-          <h3>Social</h3>
-          <p>Réduction du chômage des jeunes et amélioration de l'insertion professionnelle des diplômés.</p>
-        </div>
-        <div class="impact-card">
-          <div class="impact-icon"><i class="ti ti-trending-up" style="color:var(--accent)"></i></div>
-          <h3>Économique</h3>
-          <p>Amélioration du recrutement et optimisation des processus RH pour les entreprises.</p>
-        </div>
-        <div class="impact-card">
-          <div class="impact-icon"><i class="ti ti-school" style="color:#a78bfa"></i></div>
-          <h3>Éducatif</h3>
-          <p>Développement des compétences et accompagnement continu grâce aux recommandations de formations.</p>
-        </div>
+        <div class="impact-card imp-social"><div class="impact-ico"><i class="ti ti-heart" style="font-size:1.5rem;color:var(--green)"></i></div><h3>Social</h3><p>Réduction du chômage des jeunes et amélioration de l'insertion professionnelle des diplômés tunisiens.</p></div>
+        <div class="impact-card imp-eco"><div class="impact-ico"><i class="ti ti-trending-up" style="font-size:1.5rem;color:var(--gold)"></i></div><h3>Économique</h3><p>Amélioration des processus de recrutement et optimisation des ressources humaines pour les entreprises.</p></div>
+        <div class="impact-card imp-edu"><div class="impact-ico"><i class="ti ti-school" style="font-size:1.5rem;color:var(--blue)"></i></div><h3>Éducatif</h3><p>Développement continu des compétences grâce à des recommandations de formations personnalisées par l'IA.</p></div>
       </div>
     </div>
   </section>
 
   <!-- CLIENTS -->
-  <section>
+  <section class="clients-bg">
     <div class="container">
-      <div class="section-tag">Clients cibles</div>
-      <h2 class="section-title">Pour qui ?</h2>
+      <div class="sec-label">Public cible</div>
+      <h2 class="sec-title" style="color:var(--cream)">Pour <em>qui</em> ?</h2>
       <div class="clients-row">
-        <span class="client-chip"><i class="ti ti-user-graduate"></i> Étudiants</span>
-        <span class="client-chip"><i class="ti ti-certificate"></i> Jeunes diplômés</span>
-        <span class="client-chip"><i class="ti ti-search"></i> Chercheurs d'emploi</span>
-        <span class="client-chip"><i class="ti ti-building-community"></i> Universités</span>
+        <div class="client-chip"><i class="ti ti-user-graduate"></i> Étudiants</div>
+        <div class="client-chip"><i class="ti ti-certificate"></i> Jeunes diplômés</div>
+        <div class="client-chip"><i class="ti ti-search"></i> Chercheurs d'emploi</div>
+        <div class="client-chip"><i class="ti ti-building-community"></i> Universités</div>
       </div>
     </div>
   </section>
 
   <footer>
-    Projet réalisé à l'<span>Institut International de Technologie (IIT)</span> · Enseignante : Fatma Guidara · Année 2025–2026
+    <div class="foot-logo">Career<em>Boost</em> AI</div>
+    <p>Institut International de Technologie (IIT) · Enseignante : Fatma Guidara · 2025–2026</p>
+    <p style="font-size:.75rem;color:#4a4038">Projet DS — Accompagnement Startup</p>
   </footer>
 </div>
 
-<!-- PAGE LOGIN ADMIN -->
+<!-- ═══════════════ PAGE LOGIN ═══════════════ -->
 <div id="page-login" class="page">
   <div class="login-wrap">
     <div class="login-card">
-      <div class="login-logo">CareerBoost AI</div>
+      <div class="login-logo">Career<em>Boost</em> AI</div>
       <div class="login-sub">Interface Administrateur</div>
-      <div class="form-group">
-        <label>Identifiant</label>
-        <input type="text" id="login-user" placeholder="admin" />
-      </div>
-      <div class="form-group">
-        <label>Mot de passe</label>
-        <input type="password" id="login-pass" placeholder="••••••" onkeydown="if(event.key==='Enter')doLogin()" />
-      </div>
-      <div class="login-err" id="login-err"></div>
-      <button class="btn-save" style="width:100%;margin-top:.5rem" onclick="doLogin()"><i class="ti ti-login"></i> Connexion</button>
-      <div style="text-align:center;margin-top:1rem"><a onclick="showPage('page-public')" style="color:var(--text2);font-size:.82rem;cursor:pointer">← Retour au site</a></div>
+      <div class="fgroup"><label>Identifiant</label><input type="text" id="lu" placeholder="admin" /></div>
+      <div class="fgroup"><label>Mot de passe</label><input type="password" id="lp" placeholder="••••••" onkeydown="if(event.key==='Enter')doLogin()" /></div>
+      <div class="login-err" id="lerr"></div>
+      <button class="btn-save" style="width:100%;margin-top:.75rem;padding:.8rem" onclick="doLogin()"><i class="ti ti-login"></i> Connexion</button>
+      <div style="text-align:center;margin-top:1.25rem"><a onclick="showPage('page-public')" style="color:var(--ink3);font-size:.8rem;cursor:pointer;text-decoration:underline">← Retour au site</a></div>
     </div>
   </div>
 </div>
 
-<!-- PAGE ADMIN -->
+<!-- ═══════════════ PAGE ADMIN ═══════════════ -->
 <div id="page-admin" class="page">
-  <nav id="main-nav" style="position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,13,20,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between">
-    <div class="logo">CareerBoost AI <span style="font-size:.7rem;color:var(--text2);font-family:'DM Sans',sans-serif;font-weight:400;margin-left:.5rem">Admin</span></div>
-    <div style="display:flex;align-items:center;gap:1rem">
-      <span style="font-size:.82rem;color:var(--text2)"><i class="ti ti-user-circle"></i> Administrateur</span>
-      <button class="btn-outline" style="padding:.4rem 1rem;font-size:.82rem" onclick="logout()"><i class="ti ti-logout"></i> Déconnexion</button>
-      <button class="btn-outline" style="padding:.4rem 1rem;font-size:.82rem" onclick="showPage('page-public')"><i class="ti ti-world"></i> Voir le site</button>
+  <nav style="position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(250,247,242,.97);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:0 2rem;height:68px;display:flex;align-items:center;justify-content:space-between">
+    <div class="logo">Career<em>Boost</em> AI <span style="font-size:.72rem;color:var(--ink3);font-family:'Outfit',sans-serif;font-weight:400;margin-left:.5rem;letter-spacing:.06em;text-transform:uppercase">Admin</span></div>
+    <div style="display:flex;align-items:center;gap:.75rem">
+      <span style="font-size:.8rem;color:var(--ink3)"><i class="ti ti-user-circle"></i> Administrateur</span>
+      <button class="btn-ghost" style="padding:.45rem 1rem;font-size:.8rem" onclick="showPage('page-public')"><i class="ti ti-world"></i> Site</button>
+      <button class="btn-ghost" style="padding:.45rem 1rem;font-size:.8rem" onclick="logout()"><i class="ti ti-logout"></i> Sortir</button>
     </div>
   </nav>
-  <div class="admin-layout">
+  <div class="admin-wrap">
     <aside class="sidebar">
-      <div class="sidebar-group">
-        <div class="sidebar-label">Tableau de bord</div>
-        <div class="sidebar-item active" onclick="showAdminPanel('dash')"><i class="ti ti-dashboard"></i> Aperçu</div>
+      <div class="sidebar-section">
+        <div class="sidebar-sec-label">Tableau de bord</div>
+        <div class="sidebar-item active" onclick="showPanel('dash',this)"><i class="ti ti-dashboard"></i> Aperçu général</div>
       </div>
-      <div class="sidebar-group">
-        <div class="sidebar-label">Contenu</div>
-        <div class="sidebar-item" onclick="showAdminPanel('problems')"><i class="ti ti-alert-triangle"></i> Problèmes</div>
-        <div class="sidebar-item" onclick="showAdminPanel('solutions')"><i class="ti ti-tool"></i> Solutions</div>
-        <div class="sidebar-item" onclick="showAdminPanel('innovations')"><i class="ti ti-bulb"></i> Innovations</div>
+      <div class="sidebar-section">
+        <div class="sidebar-sec-label">Contenu du site</div>
+        <div class="sidebar-item" onclick="showPanel('problems',this)"><i class="ti ti-alert-triangle"></i> Problèmes</div>
+        <div class="sidebar-item" onclick="showPanel('solutions',this)"><i class="ti ti-tool"></i> Solutions</div>
+        <div class="sidebar-item" onclick="showPanel('innovations',this)"><i class="ti ti-bulb"></i> Innovations</div>
       </div>
-      <div class="sidebar-group">
-        <div class="sidebar-label">Utilisateurs</div>
-        <div class="sidebar-item" onclick="showAdminPanel('users')"><i class="ti ti-users"></i> Utilisateurs</div>
-        <div class="sidebar-item" onclick="showAdminPanel('inscriptions')"><i class="ti ti-file-check"></i> Inscriptions</div>
+      <div class="sidebar-section">
+        <div class="sidebar-sec-label">Utilisateurs</div>
+        <div class="sidebar-item" onclick="showPanel('users',this)"><i class="ti ti-users"></i> Utilisateurs</div>
+        <div class="sidebar-item" onclick="showPanel('inscriptions',this)"><i class="ti ti-file-check"></i> Inscriptions</div>
       </div>
-      <div class="sidebar-group">
-        <div class="sidebar-label">Paramètres</div>
-        <div class="sidebar-item" onclick="showAdminPanel('settings')"><i class="ti ti-settings"></i> Paramètres</div>
+      <div class="sidebar-section">
+        <div class="sidebar-sec-label">Configuration</div>
+        <div class="sidebar-item" onclick="showPanel('settings',this)"><i class="ti ti-settings"></i> Paramètres</div>
       </div>
     </aside>
-    <main class="admin-content">
+    <main class="admin-main">
 
       <!-- DASH -->
       <div class="admin-panel active" id="panel-dash">
-        <div class="admin-header"><h2>Tableau de bord</h2><p>Vue d'ensemble de CareerBoost AI</p></div>
+        <div class="admin-h"><h2>Tableau de bord</h2><p>Vue d'ensemble de CareerBoost AI</p></div>
         <div class="metrics-row">
-          <div class="metric-card"><div class="label"><i class="ti ti-users"></i> Utilisateurs</div><div class="value" id="m-users">—</div><div class="delta delta-up" id="m-users-d"></div></div>
-          <div class="metric-card"><div class="label"><i class="ti ti-file-text"></i> CV générés</div><div class="value" id="m-cv">—</div><div class="delta delta-up" id="m-cv-d"></div></div>
-          <div class="metric-card"><div class="label"><i class="ti ti-briefcase"></i> Offres matchées</div><div class="value" id="m-offres">—</div><div class="delta delta-up" id="m-offres-d"></div></div>
-          <div class="metric-card"><div class="label"><i class="ti ti-star"></i> Entretiens simulés</div><div class="value" id="m-ent">—</div><div class="delta delta-up" id="m-ent-d"></div></div>
+          <div class="metric-card"><div class="mlabel"><i class="ti ti-users"></i> Utilisateurs</div><div class="mval" id="mv-users">—</div><div class="mdelta" id="md-users"></div></div>
+          <div class="metric-card"><div class="mlabel"><i class="ti ti-file-text"></i> CV générés</div><div class="mval" id="mv-cv">—</div><div class="mdelta" id="md-cv"></div></div>
+          <div class="metric-card"><div class="mlabel"><i class="ti ti-briefcase"></i> Offres matchées</div><div class="mval" id="mv-offres">—</div><div class="mdelta" id="md-offres"></div></div>
+          <div class="metric-card"><div class="mlabel"><i class="ti ti-microphone"></i> Entretiens</div><div class="mval" id="mv-ent">—</div><div class="mdelta" id="md-ent"></div></div>
         </div>
-        <div class="chart-bar-wrap">
-          <h3>Activité mensuelle (inscriptions)</h3>
-          <div class="bar-chart" id="bar-chart"></div>
+        <div class="chart-wrap">
+          <h3>Inscriptions mensuelles</h3>
+          <div class="barchart" id="barchart"></div>
         </div>
-        <div class="admin-table-wrap">
-          <div class="admin-table-head"><h3>Dernières inscriptions</h3></div>
-          <table class="admin-table">
-            <thead><tr><th>Nom</th><th>Email</th><th>Profil</th><th>Statut</th><th>Date</th></tr></thead>
-            <tbody id="recent-tbody"></tbody>
-          </table>
+        <div class="admin-card">
+          <div class="admin-card-head"><h3>Derniers utilisateurs</h3></div>
+          <table class="atbl"><thead><tr><th>Nom</th><th>Email</th><th>Profil</th><th>Statut</th><th>Date</th></tr></thead><tbody id="dash-tbody"></tbody></table>
         </div>
       </div>
 
       <!-- PROBLÈMES -->
       <div class="admin-panel" id="panel-problems">
-        <div class="admin-header"><h2>Gestion des problèmes</h2><p>Modifier les problèmes affichés sur le site</p></div>
+        <div class="admin-h"><h2>Problèmes</h2><p>Gérez les problèmes affichés sur le site</p></div>
         <div class="admin-form">
           <h3><i class="ti ti-plus"></i> Ajouter un problème</h3>
           <div class="form-row">
-            <div class="form-group"><label>Titre</label><input type="text" id="p-title" placeholder="Titre du problème" /></div>
-            <div class="form-group"><label>Icône (Tabler)</label><input type="text" id="p-icon" placeholder="ti-alert-circle" /></div>
+            <div class="fgroup"><label>Titre</label><input id="pt" type="text" placeholder="Intitulé du problème" /></div>
+            <div class="fgroup"><label>Icône Tabler</label><input id="pi" type="text" placeholder="ti-alert-circle" /></div>
           </div>
-          <div class="form-group"><label>Description</label><textarea id="p-desc" placeholder="Description du problème..."></textarea></div>
-          <button class="btn-save" onclick="addProblem()"><i class="ti ti-device-floppy"></i> Enregistrer</button>
+          <div class="fgroup"><label>Description</label><textarea id="pd" placeholder="Décrivez le problème..."></textarea></div>
+          <button class="btn-save" onclick="addProblem()"><i class="ti ti-device-floppy"></i> Sauvegarder</button>
         </div>
-        <div class="admin-table-wrap">
-          <div class="admin-table-head"><h3>Problèmes actuels</h3></div>
-          <table class="admin-table">
-            <thead><tr><th>Titre</th><th>Description</th><th>Actions</th></tr></thead>
-            <tbody id="problems-tbody"></tbody>
-          </table>
+        <div class="admin-card">
+          <div class="admin-card-head"><h3>Liste des problèmes</h3></div>
+          <table class="atbl"><thead><tr><th>Titre</th><th>Description</th><th>Action</th></tr></thead><tbody id="ptbody"></tbody></table>
         </div>
       </div>
 
       <!-- SOLUTIONS -->
       <div class="admin-panel" id="panel-solutions">
-        <div class="admin-header"><h2>Gestion des solutions</h2><p>Modifier les solutions affichées sur le site</p></div>
+        <div class="admin-h"><h2>Solutions</h2><p>Gérez les solutions affichées sur le site</p></div>
         <div class="admin-form">
           <h3><i class="ti ti-plus"></i> Ajouter une solution</h3>
           <div class="form-row">
-            <div class="form-group"><label>Titre</label><input type="text" id="s-title" placeholder="Titre de la solution" /></div>
-            <div class="form-group"><label>Icône (Tabler)</label><input type="text" id="s-icon" placeholder="ti-robot" /></div>
+            <div class="fgroup"><label>Titre</label><input id="st" type="text" placeholder="Nom de la solution" /></div>
+            <div class="fgroup"><label>Icône Tabler</label><input id="si" type="text" placeholder="ti-robot" /></div>
           </div>
-          <div class="form-group"><label>Description</label><textarea id="s-desc" placeholder="Description de la solution..."></textarea></div>
-          <button class="btn-save" onclick="addSolution()"><i class="ti ti-device-floppy"></i> Enregistrer</button>
+          <div class="fgroup"><label>Description</label><textarea id="sd" placeholder="Décrivez la solution..."></textarea></div>
+          <button class="btn-save" onclick="addSolution()"><i class="ti ti-device-floppy"></i> Sauvegarder</button>
         </div>
-        <div class="admin-table-wrap">
-          <div class="admin-table-head"><h3>Solutions actuelles</h3></div>
-          <table class="admin-table">
-            <thead><tr><th>Titre</th><th>Description</th><th>Actions</th></tr></thead>
-            <tbody id="solutions-tbody"></tbody>
-          </table>
+        <div class="admin-card">
+          <div class="admin-card-head"><h3>Liste des solutions</h3></div>
+          <table class="atbl"><thead><tr><th>Titre</th><th>Description</th><th>Action</th></tr></thead><tbody id="stbody"></tbody></table>
         </div>
       </div>
 
       <!-- INNOVATIONS -->
       <div class="admin-panel" id="panel-innovations">
-        <div class="admin-header"><h2>Gestion des innovations</h2><p>Modifier les innovations affichées sur le site</p></div>
+        <div class="admin-h"><h2>Innovations</h2><p>Gérez les points d'innovation affichés sur le site</p></div>
         <div class="admin-form">
           <h3><i class="ti ti-plus"></i> Ajouter une innovation</h3>
-          <div class="form-group"><label>Description</label><input type="text" id="i-desc" placeholder="Description de l'innovation" /></div>
-          <button class="btn-save" onclick="addInnovation()"><i class="ti ti-device-floppy"></i> Enregistrer</button>
+          <div class="fgroup"><label>Description</label><input id="id_" type="text" placeholder="Décrivez l'innovation..." /></div>
+          <button class="btn-save" onclick="addInno()"><i class="ti ti-device-floppy"></i> Sauvegarder</button>
         </div>
-        <div class="admin-table-wrap">
-          <div class="admin-table-head"><h3>Innovations actuelles</h3></div>
-          <table class="admin-table">
-            <thead><tr><th>#</th><th>Description</th><th>Actions</th></tr></thead>
-            <tbody id="innovations-tbody"></tbody>
-          </table>
+        <div class="admin-card">
+          <div class="admin-card-head"><h3>Liste des innovations</h3></div>
+          <table class="atbl"><thead><tr><th>#</th><th>Description</th><th>Action</th></tr></thead><tbody id="itbody"></tbody></table>
         </div>
       </div>
 
       <!-- UTILISATEURS -->
       <div class="admin-panel" id="panel-users">
-        <div class="admin-header"><h2>Utilisateurs</h2><p>Gestion des comptes utilisateurs</p></div>
+        <div class="admin-h"><h2>Utilisateurs</h2><p>Gestion des comptes utilisateurs</p></div>
         <div class="admin-form">
           <h3><i class="ti ti-user-plus"></i> Ajouter un utilisateur</h3>
           <div class="form-row">
-            <div class="form-group"><label>Nom complet</label><input type="text" id="u-name" placeholder="Prénom Nom" /></div>
-            <div class="form-group"><label>Email</label><input type="email" id="u-email" placeholder="email@example.com" /></div>
+            <div class="fgroup"><label>Nom complet</label><input id="un" type="text" placeholder="Prénom Nom" /></div>
+            <div class="fgroup"><label>Adresse email</label><input id="ue" type="email" placeholder="email@example.com" /></div>
           </div>
           <div class="form-row">
-            <div class="form-group"><label>Profil</label>
-              <select id="u-type">
-                <option>Étudiant</option><option>Jeune diplômé</option><option>Chercheur d'emploi</option><option>Université</option>
-              </select>
-            </div>
-            <div class="form-group"><label>Statut</label>
-              <select id="u-status">
-                <option>Actif</option><option>Inactif</option><option>En attente</option>
-              </select>
-            </div>
+            <div class="fgroup"><label>Profil</label><select id="ut"><option>Étudiant</option><option>Jeune diplômé</option><option>Chercheur d'emploi</option><option>Université</option></select></div>
+            <div class="fgroup"><label>Statut</label><select id="us"><option>Actif</option><option>Inactif</option><option>En attente</option></select></div>
           </div>
-          <button class="btn-save" onclick="addUser()"><i class="ti ti-device-floppy"></i> Enregistrer</button>
+          <button class="btn-save" onclick="addUser()"><i class="ti ti-device-floppy"></i> Sauvegarder</button>
         </div>
-        <div class="admin-table-wrap">
-          <div class="admin-table-head"><h3>Tous les utilisateurs</h3></div>
-          <table class="admin-table">
-            <thead><tr><th>Nom</th><th>Email</th><th>Profil</th><th>Statut</th><th>Actions</th></tr></thead>
-            <tbody id="users-tbody"></tbody>
-          </table>
+        <div class="admin-card">
+          <div class="admin-card-head"><h3>Tous les utilisateurs</h3></div>
+          <table class="atbl"><thead><tr><th>Nom</th><th>Email</th><th>Profil</th><th>Statut</th><th>Action</th></tr></thead><tbody id="utbody"></tbody></table>
         </div>
       </div>
 
       <!-- INSCRIPTIONS -->
       <div class="admin-panel" id="panel-inscriptions">
-        <div class="admin-header"><h2>Inscriptions</h2><p>Suivi des demandes d'inscription</p></div>
-        <div class="admin-table-wrap">
-          <div class="admin-table-head"><h3>Demandes reçues</h3></div>
-          <table class="admin-table">
-            <thead><tr><th>Nom</th><th>Email</th><th>Profil</th><th>Message</th><th>Statut</th><th>Actions</th></tr></thead>
-            <tbody id="inscriptions-tbody"></tbody>
-          </table>
+        <div class="admin-h"><h2>Inscriptions</h2><p>Traitement des demandes d'inscription</p></div>
+        <div class="admin-card">
+          <div class="admin-card-head"><h3>Demandes reçues</h3></div>
+          <table class="atbl"><thead><tr><th>Nom</th><th>Email</th><th>Profil</th><th>Message</th><th>Statut</th><th>Actions</th></tr></thead><tbody id="instbody"></tbody></table>
         </div>
       </div>
 
       <!-- PARAMÈTRES -->
       <div class="admin-panel" id="panel-settings">
-        <div class="admin-header"><h2>Paramètres</h2><p>Configuration générale de la plateforme</p></div>
+        <div class="admin-h"><h2>Paramètres</h2><p>Configuration générale de la plateforme</p></div>
         <div class="admin-form">
           <h3><i class="ti ti-settings"></i> Informations générales</h3>
           <div class="form-row">
-            <div class="form-group"><label>Nom du projet</label><input type="text" id="cfg-name" value="CareerBoost AI" /></div>
-            <div class="form-group"><label>Année universitaire</label><input type="text" id="cfg-year" value="2025 - 2026" /></div>
+            <div class="fgroup"><label>Nom du projet</label><input type="text" value="CareerBoost AI" /></div>
+            <div class="fgroup"><label>Année universitaire</label><input type="text" value="2025 – 2026" /></div>
           </div>
           <div class="form-row">
-            <div class="form-group"><label>Enseignante</label><input type="text" id="cfg-teacher" value="Fatma Guidara" /></div>
-            <div class="form-group"><label>Établissement</label><input type="text" id="cfg-school" value="Institut International de Technologie (IIT)" /></div>
+            <div class="fgroup"><label>Enseignante</label><input type="text" value="Fatma Guidara" /></div>
+            <div class="fgroup"><label>Établissement</label><input type="text" value="Institut International de Technologie" /></div>
           </div>
-          <div class="form-group"><label>Description du projet</label><textarea id="cfg-desc">CareerBoost AI est une solution innovante basée sur l'intelligence artificielle qui répond à un besoin réel du marché de l'emploi.</textarea></div>
-          <button class="btn-save" onclick="saveSettings()"><i class="ti ti-device-floppy"></i> Sauvegarder</button>
+          <div class="fgroup"><label>Description</label><textarea>CareerBoost AI est une solution innovante basée sur l'intelligence artificielle qui répond à un besoin réel du marché de l'emploi et bénéficie d'un écosystème favorable en Tunisie.</textarea></div>
+          <button class="btn-save" onclick="toast('Paramètres sauvegardés !')"><i class="ti ti-device-floppy"></i> Sauvegarder</button>
         </div>
         <div class="admin-form">
-          <h3><i class="ti ti-lock"></i> Changer le mot de passe admin</h3>
+          <h3><i class="ti ti-lock"></i> Sécurité</h3>
           <div class="form-row">
-            <div class="form-group"><label>Nouveau mot de passe</label><input type="password" id="new-pass" placeholder="••••••" /></div>
-            <div class="form-group"><label>Confirmer</label><input type="password" id="conf-pass" placeholder="••••••" /></div>
+            <div class="fgroup"><label>Nouveau mot de passe</label><input type="password" id="np" placeholder="••••••" /></div>
+            <div class="fgroup"><label>Confirmer</label><input type="password" id="cp" placeholder="••••••" /></div>
           </div>
           <button class="btn-save" onclick="changePass()"><i class="ti ti-key"></i> Modifier</button>
         </div>
@@ -570,303 +564,146 @@
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toastEl"></div>
 
 <script>
-// ============ DATA ============
-let data = {
+const DB={
   problems:[
-    {id:1,title:"Emploi inadapté",icon:"ti-search",desc:"Difficulté à trouver un emploi correspondant au profil de chaque candidat"},
-    {id:2,title:"CV non optimisés",icon:"ti-file-x",desc:"Les CV ne sont pas optimisés pour les systèmes ATS et les recruteurs"},
-    {id:3,title:"Manque de préparation",icon:"ti-microphone-off",desc:"Absence de préparation efficace aux entretiens d'embauche"},
-    {id:4,title:"Stress et manque de confiance",icon:"ti-mood-sad",desc:"Anxiété élevée chez les candidats face aux processus de recrutement"},
-    {id:5,title:"Mauvaise orientation",icon:"ti-direction-sign",desc:"Orientation professionnelle non adaptée aux réalités du marché"}
+    {id:1,title:"Emploi inadapté au profil",icon:"ti-search",desc:"Difficulté à trouver un emploi correspondant aux compétences et aspirations de chaque candidat"},
+    {id:2,title:"CV non optimisés",icon:"ti-file-x",desc:"Les CV ne sont pas adaptés aux systèmes ATS ni aux attentes des recruteurs modernes"},
+    {id:3,title:"Manque de préparation",icon:"ti-microphone-off",desc:"Absence de préparation efficace et structurée aux entretiens d'embauche"},
+    {id:4,title:"Stress et manque de confiance",icon:"ti-mood-sad",desc:"Forte anxiété et perte de confiance en soi face aux processus de recrutement"},
+    {id:5,title:"Mauvaise orientation",icon:"ti-direction-sign",desc:"Orientation professionnelle inadaptée aux réalités et opportunités du marché de l'emploi"}
   ],
   solutions:[
-    {id:1,title:"Génération de CV",icon:"ti-file-description",desc:"Création automatique de CV professionnels adaptés à chaque offre"},
-    {id:2,title:"Lettres de motivation",icon:"ti-writing",desc:"Lettres personnalisées générées par l'IA selon le poste visé"},
-    {id:3,title:"Matching intelligent",icon:"ti-target",desc:"Correspondance intelligente entre profils et offres d'emploi"},
-    {id:4,title:"Simulation d'entretiens",icon:"ti-message-2",desc:"Pratique d'entretiens virtuels avec retours personnalisés"},
-    {id:5,title:"Coaching carrière IA",icon:"ti-robot",desc:"Accompagnement personnalisé par intelligence artificielle 24h/24"},
-    {id:6,title:"Gestion du stress",icon:"ti-heart-rate-monitor",desc:"Outils et techniques pour gérer l'anxiété liée à la recherche d'emploi"},
-    {id:7,title:"Recommandations formations",icon:"ti-school",desc:"Suggestions de formations adaptées pour combler les lacunes de compétences"}
+    {id:1,title:"Génération de CV",icon:"ti-file-description",desc:"CV professionnels générés automatiquement et adaptés à chaque offre ciblée"},
+    {id:2,title:"Lettres de motivation",icon:"ti-writing",desc:"Lettres personnalisées créées par l'IA selon le profil et le poste visé"},
+    {id:3,title:"Matching intelligent",icon:"ti-target",desc:"Correspondance intelligente entre votre profil et les meilleures offres disponibles"},
+    {id:4,title:"Simulation d'entretiens",icon:"ti-message-2",desc:"Entraînement aux entretiens virtuels avec retours personnalisés et scoring"},
+    {id:5,title:"Coaching carrière IA",icon:"ti-robot",desc:"Accompagnement personnalisé par intelligence artificielle disponible 24h/24 et 7j/7"},
+    {id:6,title:"Gestion du stress",icon:"ti-heart-rate-monitor",desc:"Outils et techniques pour gérer l'anxiété et renforcer la confiance en soi"},
+    {id:7,title:"Recommandations formations",icon:"ti-school",desc:"Suggestions de formations ciblées pour combler les lacunes et booster votre profil"}
   ],
   innovations:[
-    {id:1,desc:"IA pour matching CV/offres d'emploi en temps réel"},
-    {id:2,desc:"Simulation d'entretien intelligente avec analyse émotionnelle"},
-    {id:3,desc:"Analyse automatique des compétences et lacunes"},
-    {id:4,desc:"Coaching personnalisé disponible 24h/24 et 7j/7"},
-    {id:5,desc:"Plateforme intégrée complète tout-en-un"}
+    {id:1,desc:"Matching IA entre CV et offres d'emploi en temps réel avec scoring de compatibilité"},
+    {id:2,desc:"Simulation d'entretien intelligente avec analyse du discours et retours détaillés"},
+    {id:3,desc:"Analyse automatique des compétences et identification des axes d'amélioration"},
+    {id:4,desc:"Coaching entièrement personnalisé, disponible 24h/24 et 7j/7 sans interruption"},
+    {id:5,desc:"Plateforme tout-en-un intégrant CV, emploi, coaching et préparation aux entretiens"}
   ],
   users:[
-    {id:1,name:"Amira Ben Salem",email:"amira@example.com",type:"Étudiante",status:"Actif"},
-    {id:2,name:"Karim Mansouri",email:"karim@example.com",type:"Jeune diplômé",status:"Actif"},
-    {id:3,name:"Sana Trabelsi",email:"sana@example.com",type:"Chercheur d'emploi",status:"En attente"},
-    {id:4,name:"Mohamed Ali",email:"mali@example.com",type:"Étudiant",status:"Inactif"}
+    {id:1,name:"Amira Ben Salem",email:"amira@iit.tn",type:"Étudiante",status:"Actif"},
+    {id:2,name:"Karim Mansouri",email:"karim@gmail.com",type:"Jeune diplômé",status:"Actif"},
+    {id:3,name:"Sana Trabelsi",email:"sana@outlook.com",type:"Chercheur d'emploi",status:"En attente"},
+    {id:4,name:"Mohamed Ali Cherif",email:"mali@iit.tn",type:"Étudiant",status:"Inactif"}
   ],
   inscriptions:[
-    {id:1,name:"Lina Haddad",email:"lina@example.com",type:"Étudiante",message:"Intéressée par le coaching carrière",status:"En attente"},
-    {id:2,name:"Yassine Cherni",email:"yassine@example.com",type:"Jeune diplômé",message:"Besoin d'aide pour le CV",status:"Approuvée"},
-    {id:3,name:"Fatima Zahra",email:"fz@example.com",type:"Chercheur d'emploi",message:"Préparation aux entretiens",status:"Refusée"}
+    {id:1,name:"Lina Haddad",email:"lina@example.com",type:"Étudiante",msg:"Intéressée par le module coaching carrière",status:"En attente"},
+    {id:2,name:"Yassine Cherni",email:"yassine@example.com",type:"Jeune diplômé",msg:"Besoin d'optimisation du CV",status:"Approuvée"},
+    {id:3,name:"Fatima Zahra Mejri",email:"fz@example.com",type:"Chercheur d'emploi",msg:"Préparation aux entretiens techniques",status:"Refusée"}
   ],
   metrics:{users:1247,cv:3894,offres:856,entretiens:512},
   monthly:[45,72,91,110,88,134,156,201,178,220,265,310],
-  adminPass:"admin123"
+  pass:"admin123"
 };
+let nid={p:6,s:8,i:6,u:5,ins:4};
 
-let nextId = {p:6,s:8,i:6,u:5,ins:4};
-
-// ============ NAVIGATION ============
-function showPage(p){
-  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
-  document.getElementById(p).classList.add('active');
-  window.scrollTo(0,0);
-}
-
-function scrollTo(id){
-  showPage('page-public');
-  setTimeout(()=>{
-    const el=document.getElementById(id);
-    if(el)el.scrollIntoView({behavior:'smooth'});
-  },50);
-}
-
-function showAdmin(){showPage('page-login')}
-function logout(){showPage('page-public');toast('Déconnecté avec succès')}
+function showPage(id){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
+function goTo(id){showPage('page-public');setTimeout(()=>{const e=document.getElementById(id);if(e)e.scrollIntoView({behavior:'smooth'})},50)}
+function showLogin(){showPage('page-login')}
+function logout(){showPage('page-public');toast('Déconnexion réussie')}
 
 function doLogin(){
-  const u=document.getElementById('login-user').value;
-  const p=document.getElementById('login-pass').value;
-  if(u==='admin'&&p===data.adminPass){
-    showPage('page-admin');
-    renderAdmin();
-  } else {
-    document.getElementById('login-err').textContent='Identifiants incorrects';
-    document.getElementById('login-pass').value='';
-  }
+  const u=document.getElementById('lu').value,p=document.getElementById('lp').value;
+  if(u==='admin'&&p===DB.pass){showPage('page-admin');renderAdmin()}
+  else{document.getElementById('lerr').textContent='Identifiants incorrects';document.getElementById('lp').value=''}
 }
 
-function showAdminPanel(name){
+function showPanel(name,el){
   document.querySelectorAll('.admin-panel').forEach(x=>x.classList.remove('active'));
   document.getElementById('panel-'+name).classList.add('active');
   document.querySelectorAll('.sidebar-item').forEach(x=>x.classList.remove('active'));
-  event.currentTarget.classList.add('active');
+  el.classList.add('active');
 }
 
-// ============ TOAST ============
-function toast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
+function toast(msg){const t=document.getElementById('toastEl');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
+
+function sbadge(s){
+  if(s==='Actif')return`<span class="badge b-green"><i class="ti ti-circle-check"></i>${s}</span>`;
+  if(s==='Inactif')return`<span class="badge b-gray">${s}</span>`;
+  return`<span class="badge b-gold"><i class="ti ti-clock"></i>${s}</span>`;
+}
+function ibadge(s){
+  if(s==='Approuvée')return`<span class="badge b-green">${s}</span>`;
+  if(s==='Refusée')return`<span class="badge b-red">${s}</span>`;
+  return`<span class="badge b-gold">${s}</span>`;
 }
 
-// ============ RENDER PUBLIC ============
-function renderProblems(){
-  const c=document.getElementById('problems-container');
-  if(!c)return;
-  c.innerHTML=data.problems.map(p=>`
-    <div class="problem-card">
-      <div class="problem-icon"><i class="ti ${p.icon}"></i></div>
-      <div><h4>${p.title}</h4><p>${p.desc}</p></div>
-    </div>`).join('');
+function renderPublic(){
+  document.getElementById('prob-grid').innerHTML=DB.problems.map(p=>`<div class="prob-card"><div class="prob-ico"><i class="ti ${p.icon}"></i></div><h4>${p.title}</h4><p>${p.desc}</p></div>`).join('');
+  document.getElementById('sol-grid').innerHTML=DB.solutions.map(s=>`<div class="sol-card"><div class="sol-ico"><i class="ti ${s.icon}"></i></div><h4>${s.title}</h4><p>${s.desc}</p></div>`).join('');
+  document.getElementById('inno-list').innerHTML=DB.innovations.map((v,i)=>`<div class="inno-item" data-n="${String(i+1).padStart(2,'0')}"><div class="inno-line"></div><p>${v.desc}</p></div>`).join('');
 }
 
-function renderSolutions(){
-  const c=document.getElementById('solutions-container');
-  if(!c)return;
-  c.innerHTML=data.solutions.map(s=>`
-    <div class="solution-card">
-      <div class="sol-icon"><i class="ti ${s.icon}"></i></div>
-      <h4>${s.title}</h4>
-      <p>${s.desc}</p>
-    </div>`).join('');
-}
-
-function renderInnovations(){
-  const c=document.getElementById('innovations-container');
-  if(!c)return;
-  c.innerHTML=data.innovations.map((v,i)=>`
-    <div class="inno-card">
-      <div class="inno-num">${String(i+1).padStart(2,'0')}</div>
-      <p>${v.desc}</p>
-    </div>`).join('');
-}
-
-// ============ RENDER ADMIN ============
 function renderAdmin(){
-  renderMetrics();renderBarChart();renderRecentTable();
-  renderProblemsTable();renderSolutionsTable();renderInnovationsTable();
-  renderUsersTable();renderInscriptionsTable();
-}
-
-function renderMetrics(){
-  document.getElementById('m-users').textContent=data.metrics.users.toLocaleString();
-  document.getElementById('m-cv').textContent=data.metrics.cv.toLocaleString();
-  document.getElementById('m-offres').textContent=data.metrics.offres.toLocaleString();
-  document.getElementById('m-ent').textContent=data.metrics.entretiens.toLocaleString();
-  document.getElementById('m-users-d').textContent='↑ +12% ce mois';
-  document.getElementById('m-cv-d').textContent='↑ +8% ce mois';
-  document.getElementById('m-offres-d').textContent='↑ +15% ce mois';
-  document.getElementById('m-ent-d').textContent='↑ +6% ce mois';
-}
-
-function renderBarChart(){
+  const m=DB.metrics;
+  document.getElementById('mv-users').textContent=m.users.toLocaleString();
+  document.getElementById('mv-cv').textContent=m.cv.toLocaleString();
+  document.getElementById('mv-offres').textContent=m.offres.toLocaleString();
+  document.getElementById('mv-ent').textContent=m.entretiens.toLocaleString();
+  ['users','cv','offres','ent'].forEach((k,i)=>{document.getElementById('md-'+k).textContent='↑ +'+(8+i*3)+'% ce mois'});
   const months=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
-  const max=Math.max(...data.monthly);
-  document.getElementById('bar-chart').innerHTML=data.monthly.map((v,i)=>`
-    <div class="bar-col">
-      <div class="bar-val">${v}</div>
-      <div class="bar" style="height:${Math.round((v/max)*120)}px" title="${months[i]}: ${v}"></div>
-      <div class="bar-label">${months[i]}</div>
-    </div>`).join('');
+  const max=Math.max(...DB.monthly);
+  document.getElementById('barchart').innerHTML=DB.monthly.map((v,i)=>`<div class="bcol"><div class="bval">${v}</div><div class="bbar" style="height:${Math.round(v/max*110)}px"></div><div class="blabel">${months[i]}</div></div>`).join('');
+  document.getElementById('dash-tbody').innerHTML=DB.users.map(u=>`<tr><td>${u.name}</td><td style="color:var(--ink3)">${u.email}</td><td><span class="badge b-blue">${u.type}</span></td><td>${sbadge(u.status)}</td><td style="color:var(--ink3)">Juin 2026</td></tr>`).join('');
+  document.getElementById('ptbody').innerHTML=DB.problems.map(p=>`<tr><td><i class="ti ${p.icon}" style="color:var(--gold);margin-right:.4rem"></i>${p.title}</td><td style="color:var(--ink3)">${p.desc}</td><td><button class="btn-del" onclick="del('problems',${p.id})"><i class="ti ti-trash"></i></button></td></tr>`).join('');
+  document.getElementById('stbody').innerHTML=DB.solutions.map(s=>`<tr><td><i class="ti ${s.icon}" style="color:var(--green);margin-right:.4rem"></i>${s.title}</td><td style="color:var(--ink3)">${s.desc}</td><td><button class="btn-del" onclick="del('solutions',${s.id})"><i class="ti ti-trash"></i></button></td></tr>`).join('');
+  document.getElementById('itbody').innerHTML=DB.innovations.map((v,i)=>`<tr><td style="font-family:'Playfair Display',serif;font-weight:700;color:var(--gold)">${String(i+1).padStart(2,'0')}</td><td>${v.desc}</td><td><button class="btn-del" onclick="del('innovations',${v.id})"><i class="ti ti-trash"></i></button></td></tr>`).join('');
+  document.getElementById('utbody').innerHTML=DB.users.map(u=>`<tr><td>${u.name}</td><td style="color:var(--ink3)">${u.email}</td><td><span class="badge b-blue">${u.type}</span></td><td>${sbadge(u.status)}</td><td><button class="btn-del" onclick="del('users',${u.id})"><i class="ti ti-trash"></i></button></td></tr>`).join('');
+  document.getElementById('instbody').innerHTML=DB.inscriptions.map(ins=>`<tr><td>${ins.name}</td><td style="color:var(--ink3)">${ins.email}</td><td><span class="badge b-blue">${ins.type}</span></td><td style="color:var(--ink3);max-width:170px">${ins.msg}</td><td>${ibadge(ins.status)}</td><td><button class="btn-ok" onclick="approve(${ins.id})"><i class="ti ti-check"></i></button><button class="btn-del" onclick="del('inscriptions',${ins.id})"><i class="ti ti-x"></i></button></td></tr>`).join('');
 }
 
-function renderRecentTable(){
-  const recent=data.users.slice(0,4);
-  document.getElementById('recent-tbody').innerHTML=recent.map(u=>`
-    <tr>
-      <td>${u.name}</td>
-      <td style="color:var(--text2)">${u.email}</td>
-      <td><span class="badge badge-blue">${u.type}</span></td>
-      <td>${statusBadge(u.status)}</td>
-      <td style="color:var(--text2)">Juin 2026</td>
-    </tr>`).join('');
-}
-
-function statusBadge(s){
-  if(s==='Actif')return`<span class="badge badge-green"><i class="ti ti-circle-check"></i> Actif</span>`;
-  if(s==='Inactif')return`<span class="badge badge-orange"><i class="ti ti-circle-x"></i> Inactif</span>`;
-  return`<span class="badge badge-purple"><i class="ti ti-clock"></i> En attente</span>`;
-}
-
-function renderProblemsTable(){
-  document.getElementById('problems-tbody').innerHTML=data.problems.map(p=>`
-    <tr>
-      <td><i class="ti ${p.icon}" style="color:var(--accent);margin-right:.5rem"></i>${p.title}</td>
-      <td style="color:var(--text2)">${p.desc}</td>
-      <td><button class="btn-del" onclick="delItem('problems',${p.id})"><i class="ti ti-trash"></i></button></td>
-    </tr>`).join('');
-}
-
-function renderSolutionsTable(){
-  document.getElementById('solutions-tbody').innerHTML=data.solutions.map(s=>`
-    <tr>
-      <td><i class="ti ${s.icon}" style="color:var(--accent2);margin-right:.5rem"></i>${s.title}</td>
-      <td style="color:var(--text2)">${s.desc}</td>
-      <td><button class="btn-del" onclick="delItem('solutions',${s.id})"><i class="ti ti-trash"></i></button></td>
-    </tr>`).join('');
-}
-
-function renderInnovationsTable(){
-  document.getElementById('innovations-tbody').innerHTML=data.innovations.map((v,i)=>`
-    <tr>
-      <td style="color:var(--accent);font-family:'Syne',sans-serif;font-weight:700">${String(i+1).padStart(2,'0')}</td>
-      <td>${v.desc}</td>
-      <td><button class="btn-del" onclick="delItem('innovations',${v.id})"><i class="ti ti-trash"></i></button></td>
-    </tr>`).join('');
-}
-
-function renderUsersTable(){
-  document.getElementById('users-tbody').innerHTML=data.users.map(u=>`
-    <tr>
-      <td>${u.name}</td>
-      <td style="color:var(--text2)">${u.email}</td>
-      <td><span class="badge badge-blue">${u.type}</span></td>
-      <td>${statusBadge(u.status)}</td>
-      <td><button class="btn-del" onclick="delItem('users',${u.id})"><i class="ti ti-trash"></i></button></td>
-    </tr>`).join('');
-}
-
-function renderInscriptionsTable(){
-  document.getElementById('inscriptions-tbody').innerHTML=data.inscriptions.map(ins=>`
-    <tr>
-      <td>${ins.name}</td>
-      <td style="color:var(--text2)">${ins.email}</td>
-      <td><span class="badge badge-blue">${ins.type}</span></td>
-      <td style="color:var(--text2);max-width:180px">${ins.message}</td>
-      <td>${insStatusBadge(ins.status)}</td>
-      <td>
-        <button class="btn-edit" onclick="approveIns(${ins.id})"><i class="ti ti-check"></i></button>
-        <button class="btn-del" onclick="delItem('inscriptions',${ins.id})"><i class="ti ti-x"></i></button>
-      </td>
-    </tr>`).join('');
-}
-
-function insStatusBadge(s){
-  if(s==='Approuvée')return`<span class="badge badge-green">Approuvée</span>`;
-  if(s==='Refusée')return`<span class="badge badge-red">Refusée</span>`;
-  return`<span class="badge badge-purple">En attente</span>`;
-}
-
-// ============ ACTIONS ============
-function delItem(list,id){
-  data[list]=data[list].filter(x=>x.id!==id);
-  renderAdmin();renderProblems();renderSolutions();renderInnovations();
-  toast('Supprimé avec succès');
-}
+function del(list,id){DB[list]=DB[list].filter(x=>x.id!==id);renderAdmin();renderPublic();toast('Supprimé')}
 
 function addProblem(){
-  const t=document.getElementById('p-title').value.trim();
-  const d=document.getElementById('p-desc').value.trim();
-  const ico=document.getElementById('p-icon').value.trim()||'ti-alert-circle';
+  const t=document.getElementById('pt').value.trim(),d=document.getElementById('pd').value.trim(),ico=document.getElementById('pi').value.trim()||'ti-alert-circle';
   if(!t||!d){toast('Remplissez tous les champs');return}
-  data.problems.push({id:nextId.p++,title:t,icon:ico,desc:d});
-  document.getElementById('p-title').value='';document.getElementById('p-desc').value='';document.getElementById('p-icon').value='';
-  renderProblemsTable();renderProblems();toast('Problème ajouté !');
+  DB.problems.push({id:nid.p++,title:t,icon:ico,desc:d});
+  document.getElementById('pt').value='';document.getElementById('pd').value='';document.getElementById('pi').value='';
+  renderAdmin();renderPublic();toast('Problème ajouté !')
 }
-
 function addSolution(){
-  const t=document.getElementById('s-title').value.trim();
-  const d=document.getElementById('s-desc').value.trim();
-  const ico=document.getElementById('s-icon').value.trim()||'ti-tool';
+  const t=document.getElementById('st').value.trim(),d=document.getElementById('sd').value.trim(),ico=document.getElementById('si').value.trim()||'ti-tool';
   if(!t||!d){toast('Remplissez tous les champs');return}
-  data.solutions.push({id:nextId.s++,title:t,icon:ico,desc:d});
-  document.getElementById('s-title').value='';document.getElementById('s-desc').value='';document.getElementById('s-icon').value='';
-  renderSolutionsTable();renderSolutions();toast('Solution ajoutée !');
+  DB.solutions.push({id:nid.s++,title:t,icon:ico,desc:d});
+  document.getElementById('st').value='';document.getElementById('sd').value='';document.getElementById('si').value='';
+  renderAdmin();renderPublic();toast('Solution ajoutée !')
 }
-
-function addInnovation(){
-  const d=document.getElementById('i-desc').value.trim();
+function addInno(){
+  const d=document.getElementById('id_').value.trim();
   if(!d){toast('Entrez une description');return}
-  data.innovations.push({id:nextId.i++,desc:d});
-  document.getElementById('i-desc').value='';
-  renderInnovationsTable();renderInnovations();toast('Innovation ajoutée !');
+  DB.innovations.push({id:nid.i++,desc:d});
+  document.getElementById('id_').value='';
+  renderAdmin();renderPublic();toast('Innovation ajoutée !')
 }
-
 function addUser(){
-  const n=document.getElementById('u-name').value.trim();
-  const e=document.getElementById('u-email').value.trim();
-  const t=document.getElementById('u-type').value;
-  const s=document.getElementById('u-status').value;
+  const n=document.getElementById('un').value.trim(),e=document.getElementById('ue').value.trim();
   if(!n||!e){toast('Remplissez tous les champs');return}
-  data.users.push({id:nextId.u++,name:n,email:e,type:t,status:s});
-  data.metrics.users++;
-  document.getElementById('u-name').value='';document.getElementById('u-email').value='';
-  renderUsersTable();renderRecentTable();renderMetrics();toast('Utilisateur ajouté !');
+  DB.users.push({id:nid.u++,name:n,email:e,type:document.getElementById('ut').value,status:document.getElementById('us').value});
+  DB.metrics.users++;
+  document.getElementById('un').value='';document.getElementById('ue').value='';
+  renderAdmin();toast('Utilisateur ajouté !')
 }
-
-function approveIns(id){
-  const ins=data.inscriptions.find(x=>x.id===id);
-  if(ins)ins.status='Approuvée';
-  renderInscriptionsTable();toast('Inscription approuvée !');
-}
-
-function saveSettings(){
-  toast('Paramètres sauvegardés !');
-}
-
+function approve(id){const ins=DB.inscriptions.find(x=>x.id===id);if(ins)ins.status='Approuvée';renderAdmin();toast('Inscription approuvée !')}
 function changePass(){
-  const np=document.getElementById('new-pass').value;
-  const cp=document.getElementById('conf-pass').value;
-  if(!np){toast('Entrez un mot de passe');return}
-  if(np!==cp){toast('Les mots de passe ne correspondent pas');return}
-  data.adminPass=np;
-  document.getElementById('new-pass').value='';document.getElementById('conf-pass').value='';
-  toast('Mot de passe modifié !');
+  const n=document.getElementById('np').value,c=document.getElementById('cp').value;
+  if(!n){toast('Entrez un mot de passe');return}
+  if(n!==c){toast('Les mots de passe ne correspondent pas');return}
+  DB.pass=n;document.getElementById('np').value='';document.getElementById('cp').value='';
+  toast('Mot de passe modifié !')
 }
 
-// ============ INIT ============
-renderProblems();renderSolutions();renderInnovations();
+renderPublic();
 </script>
 </body>
 </html>
